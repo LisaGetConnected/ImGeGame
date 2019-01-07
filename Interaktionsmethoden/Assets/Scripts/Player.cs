@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour {
 
@@ -21,6 +22,7 @@ public class Player : MonoBehaviour {
         micVol = MicrophoneInput.MicLoudness;
         size = gameObject.GetComponent<Collider>().bounds.size;
         jumpstat = false;
+        playertransform.position = new Vector3(0, size.y/2, -4);
     }
 
     // Update is called once per physics tick
@@ -76,5 +78,13 @@ public class Player : MonoBehaviour {
         jumpstat = false;
         yield return null;
     }
-    
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.name == "Enemy")
+        {
+            SceneManager.LoadScene("Main");
+        }
+    }
+
 }
