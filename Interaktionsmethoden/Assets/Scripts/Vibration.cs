@@ -24,7 +24,8 @@ public static class Vibration
         }
         
     }
-    public static void Vibrate(long[] pattern, int repeat)    {
+    public static void Vibrate(long[] pattern, int repeat)
+    {
         if (IsAndroid())
         {
             vibrator.Call("vibrate", pattern, repeat);

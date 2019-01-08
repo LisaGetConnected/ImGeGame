@@ -2,27 +2,59 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour {
+
+    [SerializeField]
+    private Text lifetex;
+
+    [SerializeField]
+    private Text leveltex;
+
+    [SerializeField]
+    private float levelup;
+
+    [SerializeField]
+    private Light licht;
+
+    private int life = 3;
+    private int level = 1;
 
     Transform playertransform;
     Vector3 size;
 
     VirtualAccelerometerInput vai;
     Vector3 direction;
-    float micVol;
-    bool jumpstat;
-    float jumpspeed = 0.1f;
+    private float micVol;
+    private bool blinkstat = false;
+    private bool lichtstat = false;
+    private int lichtprog = 0;
+
+    private float timelevelup = 0;
+    
+    
+
+    
+    
+
+    
 
     // Use this for initialization
     void Start()
     {
+        //Einrichtung der instrumente
         vai = GetComponent<VirtualAccelerometerInput>();
         playertransform = gameObject.GetComponent<Transform>();
         micVol = MicrophoneInput.MicLoudness;
+
+        //Spieler auf den boden setzen
         size = gameObject.GetComponent<Collider>().bounds.size;
-        jumpstat = false;
         playertransform.position = new Vector3(0, size.y/2, -4);
+
+        //Leben setzen in der Anzeige
+        lifetex.text = "Leben: " + life;
+        leveltex.text = "Level: " + level;
     }
 
     // Update is called once per physics tick
@@ -30,13 +62,51 @@ public class Player : MonoBehaviour {
     {
         MoveSide();
 
-        //Springt er schon dann soll er erst wieder springen können wenn er auf dem boden ist. Springen durch ins Microfon schreien.
+        //licht sanft an und aus 
+        //Updaten der lautstärke
         micVol = MicrophoneInput.MicLoudness;
-        if (micVol > 0 && jumpstat != true)
+
+        if (micVol > 0.2f && lichtstat == false)
         {
-            jumpstat = true;
-            StartCoroutine("Jump");
+            lichtstat = true;
+            lichtprog = 1;
         }
+        if (lichtstat == true && lichtprog == 1)
+        {
+            licht.range +=  2 * Time.deltaTime;
+            if(licht.range >= 20)
+            {
+                lichtprog = 2;
+            }
+        }
+        else if(lichtstat == true && lichtprog == -1)
+        {
+            licht.range -= 2 * Time.deltaTime;
+            if(licht.range <= 13)
+            {
+                lichtstat = false;
+                lichtprog = 0;
+            }
+        } else if( lichtprog == 2 && lichtstat == true)
+        {
+            StartCoroutine(LichtAn());
+        }
+        
+        //level hochschalten
+        timelevelup += Time.deltaTime;
+        if(levelup <= timelevelup)
+        {
+            level += 1;
+            leveltex.text = "Level: " + level;
+            timelevelup = 0;
+        }
+
+    }
+
+    IEnumerator LichtAn()
+    {
+        yield return new WaitForSeconds(5);
+        lichtprog = -1;
 
     }
 
@@ -63,28 +133,35 @@ public class Player : MonoBehaviour {
         }
     }
 
-    IEnumerator Jump()
+    private void OnTriggerEnter(Collider collision)
     {
-        //Spieler hüpft dann wartet er oben und dann fliegt er wieder runter.
-        while (playertransform.position.y <= 4)
+        if(collision.gameObject.tag == "Enemy")
         {
-            playertransform.position += new Vector3(0, jumpspeed, 0);
-        }
-        yield return new WaitForSeconds(1);
-        while (playertransform.position.y >= size.y)
-        {
-            playertransform.position += new Vector3(0, jumpspeed, 0);
-        }
-        jumpstat = false;
-        yield return null;
-    }
-
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.name == "Enemy")
-        {
-            SceneManager.LoadScene("Main");
+            life -= 1;
+            lifetex.text = "Leben: " + life;
+            if(life <= 0)
+            {
+                SceneManager.LoadScene("Main");
+            }
+            Vibration.Vibrate(5);
+            Destroy(collision.gameObject);
+            if(blinkstat == false)
+            {
+                blinkstat = true;
+                StartCoroutine(Blink());
+            }
         }
     }
 
+    IEnumerator Blink()
+    {
+        for(int i = 0; i < 3; ++i)
+        {
+            gameObject.GetComponent<Renderer>().enabled = false;
+            yield return new WaitForSeconds(0.25f);
+            gameObject.GetComponent<Renderer>().enabled = true;
+            yield return new WaitForSeconds(0.5f);
+        }
+        blinkstat = false;
+    }
 }
