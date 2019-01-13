@@ -143,7 +143,7 @@ public class Player : MonoBehaviour {
             {
                 SceneManager.LoadScene("Main");
             }
-            Vibration.Vibrate(5);
+            Vibration.Vibrate(20);
             Destroy(collision.gameObject);
             if(blinkstat == false)
             {

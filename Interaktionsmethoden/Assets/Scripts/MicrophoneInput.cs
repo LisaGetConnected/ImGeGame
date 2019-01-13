@@ -6,10 +6,6 @@ public class MicrophoneInput : MonoBehaviour
 
     public static float MicLoudness;
 
-    
-    [SerializeField]
-    private Text debugText;
-
     bool _isInitialized;
     private AudioSource _AudioSource;
 
@@ -48,7 +44,6 @@ public class MicrophoneInput : MonoBehaviour
             result = result + (waveData[i] * waveData[i]);
         }
         result = Mathf.Sqrt(result * 1 / 128);
-        debugText.text = result.ToString();
         return result;
     }
 
