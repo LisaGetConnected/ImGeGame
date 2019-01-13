@@ -13,12 +13,23 @@ public class Enemy : MonoBehaviour {
 
     private float spawnTimeFromNow;
 
+
+    private GameObject obj;
+
+
+
     GameObject[] Enemys = new GameObject[3];
 
     // Use this for initialization
     void Start () {
         Enemys[1] = Enemy1;
         Enemys[2] = Enemy2;
+
+        obj = GameObject.Find("Floor1");
+
+
+        Floorscript scr = (Floorscript)obj.GetComponent(typeof(Floorscript));
+        spawnTime = spawnTime - 0.01f * scr.GetLevel();
     }
 
     // Update is called once per frame

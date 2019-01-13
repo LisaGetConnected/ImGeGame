@@ -10,9 +10,13 @@ public class EnemyObject : MonoBehaviour {
     [SerializeField]
     private float speed;
 
+    private GameObject obj;
+
     // Use this for initialization
     void Start () {
 		enemytransform = gameObject.GetComponent<Transform>();
+
+        obj = GameObject.Find("Floor1");
     }
 	
 	// Update is called once per frame
@@ -25,5 +29,8 @@ public class EnemyObject : MonoBehaviour {
         {
             enemytransform.position += new Vector3(0, 0, -speed);
         }
-	}
+
+        Floorscript scr = (Floorscript) obj.GetComponent(typeof(Floorscript));
+        speed = scr.GetSpeed();
+    }
 }

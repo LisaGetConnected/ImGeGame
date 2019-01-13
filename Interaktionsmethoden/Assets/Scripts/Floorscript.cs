@@ -9,12 +9,24 @@ public class Floorscript : MonoBehaviour
     public GameObject Floortwo;
     private Transform Floor1;
     private Transform Floor2;
+
+    [SerializeField]
+    private Text leveltex;
+
+    [SerializeField]
+    private float levelup;
+
     public float speed;
+    private int level = 1;
+    private float timelevelup = 0;
+
+
 
     // Use this for initialization
     void Start () {
 		Floor1 = Floorone.GetComponent<Transform>();
         Floor2 = Floortwo.GetComponent<Transform>();
+        leveltex.text = "Level: " + level;
     }
 	
 	// Update is called once per frame
@@ -32,5 +44,25 @@ public class Floorscript : MonoBehaviour
         {
             Floor2.position += new Vector3(0, 0, 80);
         }
+
+        //level hochschalten
+        timelevelup += Time.deltaTime;
+        if (levelup <= timelevelup)
+        {
+            level += 1;
+            leveltex.text = "Level: " + level;
+            timelevelup = 0;
+            speed += 0.01f; 
+        }
+    }
+
+    public float GetSpeed()
+    {
+        return speed;
+    }
+
+    public int GetLevel()
+    {
+        return level;
     }
 }

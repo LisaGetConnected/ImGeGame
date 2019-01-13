@@ -9,17 +9,11 @@ public class Player : MonoBehaviour {
     [SerializeField]
     private Text lifetex;
 
-    [SerializeField]
-    private Text leveltex;
-
-    [SerializeField]
-    private float levelup;
 
     [SerializeField]
     private Light licht;
 
     private int life = 3;
-    private int level = 1;
 
     Transform playertransform;
     Vector3 size;
@@ -31,14 +25,6 @@ public class Player : MonoBehaviour {
     private bool lichtstat = false;
     private int lichtprog = 0;
 
-    private float timelevelup = 0;
-    
-    
-
-    
-    
-
-    
 
     // Use this for initialization
     void Start()
@@ -54,7 +40,7 @@ public class Player : MonoBehaviour {
 
         //Leben setzen in der Anzeige
         lifetex.text = "Leben: " + life;
-        leveltex.text = "Level: " + level;
+        //leveltex.text = "Level: " + level;
     }
 
     // Update is called once per physics tick
@@ -92,14 +78,7 @@ public class Player : MonoBehaviour {
             StartCoroutine(LichtAn());
         }
         
-        //level hochschalten
-        timelevelup += Time.deltaTime;
-        if(levelup <= timelevelup)
-        {
-            level += 1;
-            leveltex.text = "Level: " + level;
-            timelevelup = 0;
-        }
+        
 
     }
 

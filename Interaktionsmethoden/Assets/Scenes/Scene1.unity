@@ -241,6 +241,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Floorone: {fileID: 225865620}
   Floortwo: {fileID: 1530760881}
+  leveltex: {fileID: 1112925678}
+  levelup: 5
   speed: 0.1
 --- !u!1 &694100873
 GameObject:
@@ -383,8 +385,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifetex: {fileID: 1069859669}
-  leveltex: {fileID: 1112925678}
-  levelup: 10
   licht: {fileID: 694100874}
 --- !u!23 &768879623
 MeshRenderer:
