@@ -352,7 +352,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Enemy1: {fileID: 1824523688462768, guid: 1433c844e101b6542990025e6cf4d006, type: 2}
-  Enemy2: {fileID: 1598490396923400, guid: ed9e9d0ae1253ff4ba7461f317f1219e, type: 2}
+  Enemy2: {fileID: 1269774030473054, guid: a84265e6e5a14174ba10843f3b41950d, type: 2}
   spawnTime: 2
 --- !u!1 &768879621
 GameObject:
