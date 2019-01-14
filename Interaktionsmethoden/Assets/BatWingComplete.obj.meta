@@ -1,16 +1,16 @@
 fileFormatVersion: 2
-guid: 3dd2bdf7f3dff4141867436d25711569
+guid: fe5222e2452b30e499e36a3976ab71f1
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: Floor
+    100000: BatWingComplete
     100002: //RootNode
-    400000: Floor
+    400000: BatWingComplete
     400002: //RootNode
-    2100000: FloorMat
-    2300000: Floor
-    3300000: Floor
-    4300000: Floor
+    2100000: BatWingCompleteMat
+    2300000: BatWingComplete
+    3300000: BatWingComplete
+    4300000: BatWingComplete
   externalObjects: {}
   materials:
     importMaterials: 1
